@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { donaciones } from "@/lib/api";
+import { donaciones as donacionesApi } from "@/lib/api";
 import { Droplets } from "lucide-react";
 
 interface DonanteDonacionesProps {
@@ -18,7 +18,7 @@ const DonanteDonaciones = ({ donante }: DonanteDonacionesProps) => {
 
   const loadDonaciones = async () => {
     try {
-      const data = await donaciones.getAll();
+      const data = await donacionesApi.getAll();
       setDonaciones(data || []);
     } catch (error) {
       console.error('Error loading donaciones:', error);

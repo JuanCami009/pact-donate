@@ -286,17 +286,11 @@ export const reportes = {
 export const busquedaSangre = {
   buscar: (filters?: {
     tipo_sangre?: string;
-    ciudad?: string;
-    departamento?: string;
     cantidad_minima?: number;
-    entidad_id?: string;
   }) => {
     const params = new URLSearchParams();
     if (filters?.tipo_sangre) params.append('tipo_sangre', filters.tipo_sangre);
-    if (filters?.ciudad) params.append('ciudad', filters.ciudad);
-    if (filters?.departamento) params.append('departamento', filters.departamento);
     if (filters?.cantidad_minima) params.append('cantidad_minima', filters.cantidad_minima.toString());
-    if (filters?.entidad_id) params.append('entidad_id', filters.entidad_id);
     
     const query = params.toString();
     return apiRequest(`/busqueda-sangre${query ? `?${query}` : ''}`);

@@ -830,7 +830,7 @@ app.get('/api/busqueda-sangre', authenticateToken, async (req, res) => {
       return res.status(403).json({ error: 'Solo las entidades pueden buscar sangre' });
     }
 
-    const { tipo_sangre, ciudad, departamento, cantidad_minima, entidad_id } = req.query;
+    const { tipo_sangre, cantidad_minima } = req.query;
 
     let query = `
       SELECT 
@@ -853,27 +853,9 @@ app.get('/api/busqueda-sangre', authenticateToken, async (req, res) => {
       paramCount++;
     }
 
-    if (ciudad) {
-      query += ` AND e.ciudad ILIKE $${paramCount}`;
-      params.push(`%${ciudad}%`);
-      paramCount++;
-    }
-
-    if (departamento) {
-      query += ` AND e.departamento ILIKE $${paramCount}`;
-      params.push(`%${departamento}%`);
-      paramCount++;
-    }
-
     if (cantidad_minima) {
       query += ` AND i.cantidad_ml >= $${paramCount}`;
       params.push(parseInt(cantidad_minima));
-      paramCount++;
-    }
-
-    if (entidad_id) {
-      query += ` AND i.entidad_id = $${paramCount}`;
-      params.push(entidad_id);
       paramCount++;
     }
 

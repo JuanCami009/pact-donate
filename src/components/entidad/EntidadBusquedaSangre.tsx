@@ -16,10 +16,7 @@ const EntidadBusquedaSangre = () => {
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({
     tipo_sangre: '',
-    ciudad: '',
-    departamento: '',
     cantidad_minima: '',
-    entidad_id: '',
   });
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
@@ -28,10 +25,7 @@ const EntidadBusquedaSangre = () => {
     // Update active filters
     const active: string[] = [];
     if (filters.tipo_sangre) active.push('tipo_sangre');
-    if (filters.ciudad) active.push('ciudad');
-    if (filters.departamento) active.push('departamento');
     if (filters.cantidad_minima) active.push('cantidad_minima');
-    if (filters.entidad_id) active.push('entidad_id');
     setActiveFilters(active);
   }, [filters]);
 
@@ -41,10 +35,7 @@ const EntidadBusquedaSangre = () => {
     try {
       const searchFilters: any = {};
       if (filters.tipo_sangre) searchFilters.tipo_sangre = filters.tipo_sangre;
-      if (filters.ciudad) searchFilters.ciudad = filters.ciudad;
-      if (filters.departamento) searchFilters.departamento = filters.departamento;
       if (filters.cantidad_minima) searchFilters.cantidad_minima = parseInt(filters.cantidad_minima);
-      if (filters.entidad_id) searchFilters.entidad_id = filters.entidad_id;
 
       const data = await busquedaSangre.buscar(searchFilters);
       
@@ -85,10 +76,7 @@ const EntidadBusquedaSangre = () => {
   const clearAllFilters = () => {
     setFilters({
       tipo_sangre: '',
-      ciudad: '',
-      departamento: '',
       cantidad_minima: '',
-      entidad_id: '',
     });
     setResultados([]);
     setError(null);
@@ -97,10 +85,7 @@ const EntidadBusquedaSangre = () => {
   const getFilterLabel = (key: string): string => {
     const labels: any = {
       tipo_sangre: 'Tipo de Sangre',
-      ciudad: 'Ciudad',
-      departamento: 'Departamento',
       cantidad_minima: 'Cantidad Mínima',
-      entidad_id: 'Entidad',
     };
     return labels[key] || key;
   };
@@ -130,7 +115,7 @@ const EntidadBusquedaSangre = () => {
 
           {/* Filters */}
           <div className="space-y-4 mb-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Tipo de Sangre</Label>
                 {/* Radix Select requires non-empty values for Select.Item. We use '__ALL__' as a sentinel for the "Todos" option
@@ -152,39 +137,12 @@ const EntidadBusquedaSangre = () => {
               </div>
 
               <div className="space-y-2">
-                <Label>Ciudad</Label>
-                <Input
-                  value={filters.ciudad}
-                  onChange={(e) => handleFilterChange('ciudad', e.target.value)}
-                  placeholder="Nombre de la ciudad"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Departamento</Label>
-                <Input
-                  value={filters.departamento}
-                  onChange={(e) => handleFilterChange('departamento', e.target.value)}
-                  placeholder="Nombre del departamento"
-                />
-              </div>
-
-              <div className="space-y-2">
                 <Label>Cantidad Mínima (ml)</Label>
                 <Input
                   type="number"
                   value={filters.cantidad_minima}
                   onChange={(e) => handleFilterChange('cantidad_minima', e.target.value)}
                   placeholder="Cantidad mínima requerida"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Entidad/Banco</Label>
-                <Input
-                  value={filters.entidad_id}
-                  onChange={(e) => handleFilterChange('entidad_id', e.target.value)}
-                  placeholder="ID o nombre de entidad"
                 />
               </div>
             </div>
